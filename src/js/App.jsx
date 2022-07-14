@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import "../css/App.css";
-import Form from "./Form";
+import Header from "./Header";
 import ToDoList from "./ToDoList";
 import CompleteList from "./CompleteList";
 import List from "./List";
+import { ThemeProvider } from "@mui/material/styles";
+import theme from "./theme";
 
 function App() {
   //the list of things to do
@@ -26,20 +28,22 @@ function App() {
   }, [todos]);
 
   return (
-    <div className="App">
-      <Form
-        onSubmit={(text) => {
-          if (text === "") return;
-          setTodos([
-            { text, complete: false, id: new Date().getTime() },
-            ...todos,
-          ]);
-        }}
-      />
+    <ThemeProvider theme={theme}>
+      <div className="App">
+        <Header
+          onSubmit={(text) => {
+            if (text === "") return;
+            setTodos([
+              { text, complete: false, id: new Date().getTime() },
+              ...todos,
+            ]);
+          }}
+          clearToDos={() => setTodos([])}
+        />
 
-      <List props={todos} toggle={toggleComplete} />
-      <button onClick={() => setTodos([])}>Reset</button>
-    </div>
+        <List props={todos} toggle={toggleComplete} />
+      </div>
+    </ThemeProvider>
   );
 }
 
