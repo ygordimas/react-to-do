@@ -6,10 +6,7 @@ function CompleteList(props) {
       {props.todos
         .filter((prop) => prop.complete == true)
         .map((prop) => (
-          <li key={prop.id}>
-            {prop.text}
-            {prop.id}
-          </li>
+          <li key={prop.id}>{prop.text}</li>
         ))}
     </ul>
   );

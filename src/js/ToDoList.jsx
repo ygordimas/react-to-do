@@ -12,7 +12,6 @@ function ToDoList(props) {
             style={{ textDecoration: prop.complete ? "line-through" : "" }}
           >
             {prop.text}
-            {prop.id}
           </li>
         ))}
     </ul>
