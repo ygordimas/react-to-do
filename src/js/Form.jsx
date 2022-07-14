@@ -18,11 +18,21 @@ function Form({ onSubmit }) {
     <form
       onSubmit={(e) => {
         e.preventDefault();
+        
         onSubmit(text.value);
         resetValue();
       }}
     >
       <input type="text" {...text} />
+      <button
+        onClick={(e) => {
+          e.preventDefault();
+          onSubmit(text.value);
+          resetValue();
+        }}
+      >
+        Add
+      </button>
     </form>
   );
 }

@@ -3,7 +3,7 @@ import React from "react";
 function ToDoList(props) {
   return (
     <ul className="todolist">
-      {props.props
+      {props.todos
         .filter((prop) => prop.complete == false)
         .map((prop) => (
           <li

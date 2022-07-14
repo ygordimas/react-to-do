@@ -2,15 +2,17 @@ import { useState, useEffect } from "react";
 import "../css/App.css";
 import Form from "./Form";
 import ToDoList from "./ToDoList";
+import CompleteList from "./CompleteList";
+import List from "./List";
 
 function App() {
+  //the list of things to do
   const [todos, setTodos] = useState(
     JSON.parse(localStorage.getItem("todos")) || []
   );
 
-  //toggle for completion
+  //toggle function for completion
   const toggleComplete = (id) => {
-    console.log(id);
     setTodos(
       todos.map((todo) =>
         todo.id === id ? { ...todo, complete: !todo.complete } : todo
@@ -18,6 +20,7 @@ function App() {
     );
   };
 
+  //hook for updating the localStorage when there are changes to the state of toDos
   useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos]);
@@ -25,28 +28,16 @@ function App() {
   return (
     <div className="App">
       <Form
-        onSubmit={(text) =>
+        onSubmit={(text) => {
+          if (text === "") return;
           setTodos([
             { text, complete: false, id: new Date().getTime() },
             ...todos,
-          ])
-        }
+          ]);
+        }}
       />
 
-      <ToDoList props={todos} toggle={toggleComplete} />
-
-      {/* <div>
-        {todos.map(({ text, complete }, i) => (
-          <div
-            key={text}
-            onClick={() => toggleComplete(i)}
-            style={{ textDecoration: complete ? "line-through" : "" }}
-          >
-            {text}
-          </div>
-        ))}
-      </div> */}
-
+      <List props={todos} toggle={toggleComplete} />
       <button onClick={() => setTodos([])}>Reset</button>
     </div>
   );
