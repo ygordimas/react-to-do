@@ -4,6 +4,12 @@ import TextField from "@mui/material/TextField";
 import { AppBar, Toolbar, Typography } from "@mui/material";
 import CommonButton from "./CommonButton";
 import "../css/AppHeader.css";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
+import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 
 function Header({ onSubmit, clearToDos }) {
   //for every input we can just use the custom hook below to set its value with the returned parameters
@@ -49,36 +55,71 @@ function Header({ onSubmit, clearToDos }) {
             resetValue();
           }}
         >
-          <TextField
-            label="Write your task here"
-            id="outlined-search"
-            type="text"
-            variant="outlined"
-            {...text}
-          />
-          <CommonButton
-            size="large"
-            variant="contained"
-            color="secondary"
-            onClick={(e) => {
-              e.preventDefault();
-              onSubmit(text.value);
-              resetValue();
-            }}
-          >
-            Add to List
-          </CommonButton>
-          <CommonButton
-            size="large"
-            variant="contained"
-            onClick={() => clearToDos()}
-          >
-            Reset List
-          </CommonButton>
+          {datePicker(selectedDate)}
+          {task}
+          {addButton}
+          {resetButton}
         </form>
       </Toolbar>
     );
   };
+
+  //date getter
+
+  // const handleDateChange = (newDate) => {
+  //   setSelectedDate(newDate);
+  //   console.log(selectedDate);
+  // };
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const datePicker = () => {
+    return (
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <DateTimePicker
+          label="Date and Time"
+          value={selectedDate}
+          onChange={(newValue) => {
+            setSelectedDate(newValue);
+          }}
+          renderInput={(params) => <TextField {...params} />}
+        />
+      </LocalizationProvider>
+    );
+  };
+
+  //task definer
+  const task = (
+    <>
+      <TextField
+        label="Write your task here"
+        id="outlined-search"
+        type="text"
+        variant="outlined"
+        color="secondary"
+        {...text}
+      />
+    </>
+  );
+
+  const addButton = (
+    <CommonButton
+      size="large"
+      variant="contained"
+      color="secondary"
+      onClick={(e) => {
+        e.preventDefault();
+        onSubmit(text.value);
+        resetValue();
+      }}
+    >
+      Add to List
+    </CommonButton>
+  );
+
+  const resetButton = (
+    <CommonButton size="large" variant="contained" onClick={() => clearToDos()}>
+      Reset List
+    </CommonButton>
+  );
 
   //h1 component for header
   //the component="h1" ensures that screen readers will read it first while mantaining the aspect of an h6 element
@@ -89,6 +130,7 @@ function Header({ onSubmit, clearToDos }) {
         fontFamily: "'Roboto', sans-serif",
         fontWeight: 700,
         fontSize: 22,
+        cursor: "default",
       }}
     >
       To-Do List with React
@@ -100,7 +142,7 @@ function Header({ onSubmit, clearToDos }) {
       <AppBar
         position="static"
         sx={{
-          bgcolor: "primary.dark",
+          bgcolor: "primary.light",
           p: 2,
         }}
       >

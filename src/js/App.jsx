@@ -3,10 +3,11 @@ import "../css/App.css";
 import Header from "./Header";
 import ToDoList from "./ToDoList";
 import CompleteList from "./CompleteList";
-import List from "./List";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "./theme";
-
+import Paper from "@mui/material/Paper";
+import Lists from "./Lists";
+import { Tab, Tabs } from "@mui/material";
 function App() {
   //the list of things to do
   const [todos, setTodos] = useState(
@@ -27,6 +28,12 @@ function App() {
     localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos]);
 
+  const [selectedTab, setSelectedTab] = useState(0);
+
+  const handleTabChange = (e, newValue) => {
+    setSelectedTab(newValue);
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
@@ -41,7 +48,18 @@ function App() {
           clearToDos={() => setTodos([])}
         />
 
-        <List props={todos} toggle={toggleComplete} />
+        <Tabs
+          variant="fullWidth"
+          value={selectedTab}
+          onChange={handleTabChange}
+        >
+          <Tab label="Tasks" />
+          <Tab label="Completed Tasks" />
+        </Tabs>
+
+        {selectedTab === 0 && (
+          <ToDoList todos={todos} toggle={toggleComplete} />
+        )}
       </div>
     </ThemeProvider>
   );
