@@ -4,15 +4,19 @@ import Header from "./Header";
 import ToDoList from "./ToDoList";
 import CompleteList from "./CompleteList";
 import { ThemeProvider } from "@mui/material/styles";
-import theme from "./theme";
+import myTheme from "./theme";
 import Paper from "@mui/material/Paper";
 import Lists from "./Lists";
 import { Tab, Tabs } from "@mui/material";
+import Container from "@mui/material/Container";
+
 function App() {
   //the list of things to do
   const [todos, setTodos] = useState(
     JSON.parse(localStorage.getItem("todos")) || []
   );
+
+  const completed = [...todos].filter((element) => element.complete == true);
 
   //toggle function for completion
   const toggleComplete = (id) => {
@@ -35,13 +39,32 @@ function App() {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <div className="App">
+    <ThemeProvider theme={myTheme}>
+      <Container maxWidth={false} disableGutters={true}>
         <Header
-          onSubmit={(text) => {
+          onSubmit={(text, dateAndTime) => {
             if (text === "") return;
+
             setTodos([
-              { text, complete: false, id: new Date().getTime() },
+              {
+                text,
+                whenDay:
+                  dateAndTime.getDate() +
+                  `/` +
+                  (dateAndTime.getMonth() + 1 <= 9
+                    ? `0` + (dateAndTime.getMonth() + 1)
+                    : dateAndTime.getMonth() + 1) +
+                  `/` +
+                  dateAndTime.getFullYear(),
+                whenHour:
+                  dateAndTime.getHours() +
+                  `:` +
+                  (dateAndTime.getMinutes() <= 9
+                    ? `0` + dateAndTime.getMinutes()
+                    : dateAndTime.getMinutes()),
+                complete: false,
+                id: new Date().getTime(),
+              },
               ...todos,
             ]);
           }}
@@ -54,13 +77,16 @@ function App() {
           onChange={handleTabChange}
         >
           <Tab label="Tasks" />
-          <Tab label="Completed Tasks" />
+          {completed.length > 0 && <Tab label="Completed Tasks" />}
         </Tabs>
 
         {selectedTab === 0 && (
           <ToDoList todos={todos} toggle={toggleComplete} />
         )}
-      </div>
+        {selectedTab === 1 && (
+          <CompleteList todos={todos} toggle={toggleComplete} />
+        )}
+      </Container>
     </ThemeProvider>
   );
 }

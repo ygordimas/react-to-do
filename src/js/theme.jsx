@@ -1,14 +1,36 @@
 import { createTheme } from "@mui/material/styles";
+import { teal, blueGrey, lightBlue, orange } from "@mui/material/colors";
 
-const theme = createTheme({
+const Colors = {
+  primary: teal[100],
+  secondary: lightBlue[100],
+  warning: orange[400],
+  background: blueGrey["A100"],
+  surface: blueGrey[50],
+  info: lightBlue[50],
+};
+
+const myTheme = createTheme({
   palette: {
     primary: {
-      main: "#dbecdc",
+      main: Colors.primary,
     },
     secondary: {
-      main: "#47f9e6",
+      main: Colors.secondary,
+    },
+    info: {
+      main: Colors.info,
+    },
+  },
+  components: {
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          backgroundColor: Colors.surface,
+        },
+      },
     },
   },
 });
 
-export default theme;
+export default myTheme;

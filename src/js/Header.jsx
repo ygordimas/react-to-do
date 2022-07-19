@@ -35,42 +35,8 @@ function Header({ onSubmit, clearToDos }) {
   //   },
   // };
 
-  //Form component
-  const todoForm = () => {
-    return (
-      <Toolbar
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        {todoLogo}
-        <form
-          className="headerForm"
-          onSubmit={(e) => {
-            e.preventDefault();
-
-            onSubmit(text.value);
-            resetValue();
-          }}
-        >
-          {datePicker(selectedDate)}
-          {task}
-          {addButton}
-          {resetButton}
-        </form>
-      </Toolbar>
-    );
-  };
-
-  //date getter
-
-  // const handleDateChange = (newDate) => {
-  //   setSelectedDate(newDate);
-  //   console.log(selectedDate);
-  // };
   const [selectedDate, setSelectedDate] = useState(new Date());
+
   const datePicker = () => {
     return (
       <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -86,18 +52,60 @@ function Header({ onSubmit, clearToDos }) {
     );
   };
 
+  //Form component
+  const todoForm = () => {
+    return (
+      <Toolbar
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        {todoLogo}
+        <form
+          className="headerForm"
+          // onSubmit={(e) => {
+          //   e.preventDefault();
+
+          //   onSubmit(text.value);
+          //   resetValue();
+          // }}
+        >
+          {datePicker(selectedDate)}
+          {taskInput}
+          {addButton}
+          {resetButton}
+        </form>
+      </Toolbar>
+    );
+  };
+
+  //date getter
+
+  // const handleDateChange = (newDate) => {
+  //   setSelectedDate(newDate);
+  //   console.log(selectedDate);
+  // };
+
+  const keyPress = (e) => {
+    if (e.keyCode == 13) {
+      onSubmit(text.value, selectedDate);
+      resetValue();
+    }
+  };
+
   //task definer
-  const task = (
-    <>
-      <TextField
-        label="Write your task here"
-        id="outlined-search"
-        type="text"
-        variant="outlined"
-        color="secondary"
-        {...text}
-      />
-    </>
+  const taskInput = (
+    <TextField
+      label="Write your task here"
+      id="outlined-search"
+      type="text"
+      variant="outlined"
+      color="secondary"
+      onKeyDown={keyPress}
+      {...text}
+    />
   );
 
   const addButton = (
@@ -107,7 +115,7 @@ function Header({ onSubmit, clearToDos }) {
       color="secondary"
       onClick={(e) => {
         e.preventDefault();
-        onSubmit(text.value);
+        onSubmit(text.value, selectedDate);
         resetValue();
       }}
     >
