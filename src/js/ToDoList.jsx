@@ -11,6 +11,13 @@ import Divider from "@mui/material/Divider";
 import { ButtonGroup, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Container from "@mui/material/Container";
 
 function ToDoList(props) {
   const ListButton = styled(Button)(() => ({
@@ -18,65 +25,39 @@ function ToDoList(props) {
   }));
 
   const [...todos] = props.todos.filter((prop) => prop.complete == false);
-
+  console.log(todos);
   return (
-    <>
-      {todos.length > 0 && (
-        <Paper
-          sx={{
-            width: "fit-content",
-            p: 2,
-            my: 2,
-            mx: "auto",
-          }}
-        >
-          <List>
-            {todos.map((prop, index) => {
-              return (
-                <ListItem
-                  key={prop.id}
-                  onClick={() => props.toggle(prop.id)}
-                  divider={index < todos.length - 1}
-                >
-                  <ButtonGroup sx={{ mr: "8px" }} variant="contained">
-                    <ListButton>
-                      <DeleteIcon />
-                    </ListButton>
-                    <ListButton>
-                      <DeleteIcon />
-                    </ListButton>
-                  </ButtonGroup>
-                  {/* use id with textfields to make it accessible for screen readers */}
-                  <TextField
-                    disabled
-                    id="outlined-disabled"
-                    label="When?"
-                    defaultValue={prop.whenDay + ` at ` + prop.whenHour}
-                    margin="normal"
-                    size="small"
-                    sx={{ width: "auto" }}
-                  />
-                  {/* <Button variant="contained" color="info">
-                  {prop.time.slice(0, 10).slice(8, 10)}/
-                  {prop.time.slice(0, 10).slice(5, 7)}/
-                  {prop.time.slice(0, 10).slice(0, 4)}
-                </Button> */}
-                  <TextField
-                    disabled
-                    id="outlined-disabled"
-                    label="What?"
-                    defaultValue={prop.text}
-                    margin="normal"
-                    size="small"
-                    sx={{ width: "max-content" }}
-                  />
-                </ListItem>
-              );
-            })}
-          </List>
-        </Paper>
-      )}
-    </>
+    <Container sx={{ display: "flex", justifyContent: "center", my: "24px" }}>
+      <TableContainer component={Paper} sx={{ width: "fit-content" }}>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Completed</TableCell>
+              <TableCell>Date</TableCell>
+              <TableCell>Time</TableCell>
+              <TableCell>Task</TableCell>
+              <TableCell>Delete</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {todos.map((prop, index) => (
+              <TableRow
+                key={prop.id}
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              >
+                <TableCell component="th" scope="row">
+                  button
+                </TableCell>
+                <TableCell>{prop.whenDay}</TableCell>
+                <TableCell>{prop.whenHour}</TableCell>
+                <TableCell>{prop.text}</TableCell>
+                <TableCell>button</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Container>
   );
 }
 

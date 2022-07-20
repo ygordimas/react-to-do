@@ -49,7 +49,9 @@ function App() {
               {
                 text,
                 whenDay:
-                  dateAndTime.getDate() +
+                  (dateAndTime.getDate() <= 9
+                    ? `0` + dateAndTime.getDate()
+                    : dateAndTime.getDate()) +
                   `/` +
                   (dateAndTime.getMonth() + 1 <= 9
                     ? `0` + (dateAndTime.getMonth() + 1)
@@ -57,7 +59,9 @@ function App() {
                   `/` +
                   dateAndTime.getFullYear(),
                 whenHour:
-                  dateAndTime.getHours() +
+                  (dateAndTime.getHours() <= 9
+                    ? `0` + dateAndTime.getHours()
+                    : dateAndTime.getHours()) +
                   `:` +
                   (dateAndTime.getMinutes() <= 9
                     ? `0` + dateAndTime.getMinutes()
