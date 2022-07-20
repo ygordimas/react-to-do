@@ -18,14 +18,15 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Container from "@mui/material/Container";
+import Checkbox from "@mui/material/Checkbox";
 
 function ToDoList(props) {
   const ListButton = styled(Button)(() => ({
-    paddingInline: "7px",
+    paddingInline: "4px",
   }));
 
   const [...todos] = props.todos.filter((prop) => prop.complete == false);
-  console.log(todos);
+
   return (
     <Container sx={{ display: "flex", justifyContent: "center", my: "24px" }}>
       <TableContainer component={Paper} sx={{ width: "fit-content" }}>
@@ -46,12 +47,21 @@ function ToDoList(props) {
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
-                  button
+                  <Checkbox />
                 </TableCell>
                 <TableCell>{prop.whenDay}</TableCell>
                 <TableCell>{prop.whenHour}</TableCell>
                 <TableCell>{prop.text}</TableCell>
-                <TableCell>button</TableCell>
+                <TableCell>
+                  <ListButton
+                    id={prop.id}
+                    color="secondary"
+                    variant="contained"
+                    onClick={(e) => props.delete(e.currentTarget.id)}
+                  >
+                    <DeleteIcon />
+                  </ListButton>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

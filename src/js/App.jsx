@@ -22,9 +22,14 @@ function App() {
   const toggleComplete = (id) => {
     setTodos(
       todos.map((todo) =>
-        todo.id === id ? { ...todo, complete: !todo.complete } : todo
+        todo.id == id ? { ...todo, complete: !todo.complete } : todo
       )
     );
+  };
+
+  const deleteTask = (id) => {
+    // const newTodos = todos.filter((todo) => todo.id != id);
+    setTodos(todos.filter((todo) => todo.id != id));
   };
 
   //hook for updating the localStorage when there are changes to the state of toDos
@@ -85,7 +90,7 @@ function App() {
         </Tabs>
 
         {selectedTab === 0 && (
-          <ToDoList todos={todos} toggle={toggleComplete} />
+          <ToDoList todos={todos} toggle={toggleComplete} delete={deleteTask} />
         )}
         {selectedTab === 1 && (
           <CompleteList todos={todos} toggle={toggleComplete} />

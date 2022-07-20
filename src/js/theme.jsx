@@ -1,12 +1,12 @@
 import { createTheme } from "@mui/material/styles";
-import { teal, blueGrey, lightBlue, orange } from "@mui/material/colors";
+import { teal, blueGrey, grey, lightBlue, orange } from "@mui/material/colors";
 
 const Colors = {
   primary: teal[100],
   secondary: lightBlue[100],
   warning: orange[400],
   background: blueGrey["A100"],
-  surface: blueGrey[50],
+  surface: grey[50],
   info: lightBlue[50],
 };
 
