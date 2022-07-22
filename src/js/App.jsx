@@ -34,10 +34,12 @@ function App() {
 
   //hook for updating the localStorage when there are changes to the state of toDos
   useEffect(() => {
+    if (todos.filter((element) => element.complete == false) == 0)
+      setSelectedTab(1);
     localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos]);
 
-  const [selectedTab, setSelectedTab] = useState(0);
+  const [selectedTab, setSelectedTab] = useState("0");
 
   const handleTabChange = (e, newValue) => {
     setSelectedTab(newValue);
@@ -45,7 +47,11 @@ function App() {
 
   return (
     <ThemeProvider theme={myTheme}>
-      <Container maxWidth={false} disableGutters={true}>
+      <Container
+        sx={{ bgcolor: "secondary.light", height: "100%" }}
+        maxWidth={false}
+        disableGutters={true}
+      >
         <Header
           onSubmit={(text, dateAndTime) => {
             if (text === "") return;
@@ -84,16 +90,24 @@ function App() {
           variant="fullWidth"
           value={selectedTab}
           onChange={handleTabChange}
+          textColor="primary"
         >
-          <Tab label="Tasks" />
-          {completed.length > 0 && <Tab label="Completed Tasks" />}
+          {todos.filter((element) => element.complete == false).length > 0 && (
+            <Tab label="Tasks" value="0" />
+          )}
+
+          {completed.length > 0 && <Tab label="Completed Tasks" value="1" />}
         </Tabs>
 
-        {selectedTab === 0 && (
+        {selectedTab == 0 && (
           <ToDoList todos={todos} toggle={toggleComplete} delete={deleteTask} />
         )}
-        {selectedTab === 1 && (
-          <CompleteList todos={todos} toggle={toggleComplete} />
+        {selectedTab == 1 && (
+          <CompleteList
+            todos={todos}
+            toggle={toggleComplete}
+            delete={deleteTask}
+          />
         )}
       </Container>
     </ThemeProvider>

@@ -53,33 +53,6 @@ function Header({ onSubmit, clearToDos }) {
   };
 
   //Form component
-  const todoForm = () => {
-    return (
-      <Toolbar
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        {todoLogo}
-        <form
-          className="headerForm"
-          // onSubmit={(e) => {
-          //   e.preventDefault();
-
-          //   onSubmit(text.value);
-          //   resetValue();
-          // }}
-        >
-          {datePicker(selectedDate)}
-          {taskInput}
-          {addButton}
-          {resetButton}
-        </form>
-      </Toolbar>
-    );
-  };
 
   //date getter
 
@@ -98,6 +71,7 @@ function Header({ onSubmit, clearToDos }) {
   //task definer
   const taskInput = (
     <TextField
+      sx={{ width: "500px" }}
       label="Write your task here"
       id="outlined-search"
       type="text"
@@ -154,7 +128,25 @@ function Header({ onSubmit, clearToDos }) {
           p: 2,
         }}
       >
-        {todoForm()}
+        <Toolbar
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            flexDirection: {
+              xs: "column",
+              md: "row",
+            },
+          }}
+        >
+          {todoLogo}
+          <form className="headerForm">
+            {datePicker(selectedDate)}
+            {taskInput}
+            {addButton}
+            {resetButton}
+          </form>
+        </Toolbar>
       </AppBar>
     </header>
   );
