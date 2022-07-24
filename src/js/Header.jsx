@@ -10,6 +10,7 @@ import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
+import theme, { HeaderButton, StyledTextField } from "./theme";
 
 function Header({ onSubmit, clearToDos }) {
   //for every input we can just use the custom hook below to set its value with the returned parameters
@@ -42,7 +43,9 @@ function Header({ onSubmit, clearToDos }) {
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <DateTimePicker
           label="Date and Time"
+          disablePast={true}
           value={selectedDate}
+          InputLabelProps={{ style: { color: "green" } }}
           onChange={(newValue) => {
             setSelectedDate(newValue);
           }}
@@ -70,23 +73,20 @@ function Header({ onSubmit, clearToDos }) {
 
   //task definer
   const taskInput = (
-    <TextField
+    <StyledTextField
       sx={{ width: "500px" }}
       label="Write your task here"
-      id="outlined-search"
-      type="text"
-      variant="outlined"
-      color="secondary"
+      id="outlined-basic"
       onKeyDown={keyPress}
       {...text}
     />
   );
 
   const addButton = (
-    <CommonButton
+    <HeaderButton
+      theme={theme}
       size="large"
       variant="contained"
-      color="secondary"
       onClick={(e) => {
         e.preventDefault();
         onSubmit(text.value, selectedDate);
@@ -94,11 +94,15 @@ function Header({ onSubmit, clearToDos }) {
       }}
     >
       Add to List
-    </CommonButton>
+    </HeaderButton>
   );
 
   const resetButton = (
-    <CommonButton size="large" variant="contained" onClick={() => clearToDos()}>
+    <CommonButton
+      size="medium"
+      variant="contained"
+      onClick={() => clearToDos()}
+    >
       Reset List
     </CommonButton>
   );
@@ -113,42 +117,43 @@ function Header({ onSubmit, clearToDos }) {
         fontWeight: 700,
         fontSize: 22,
         cursor: "default",
+        color: "secondary.dark",
       }}
     >
-      To-Do List with React
+      To-Do List with React + MaterialUI
     </Typography>
   );
 
   return (
-    <header className="appHeader">
-      <AppBar
-        position="static"
+    <AppBar
+      position="static"
+      // sx={{
+      //   bgcolor: "primary.light",
+      //   p: 2,
+      //   borderBottom: 1,
+      //   borderColor: "secondary.dark",
+      // }}
+    >
+      <Toolbar
         sx={{
-          bgcolor: "primary.light",
-          p: 2,
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          flexDirection: {
+            xs: "column",
+            md: "row",
+          },
         }}
       >
-        <Toolbar
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            flexDirection: {
-              xs: "column",
-              md: "row",
-            },
-          }}
-        >
-          {todoLogo}
-          <form className="headerForm">
-            {datePicker(selectedDate)}
-            {taskInput}
-            {addButton}
-            {resetButton}
-          </form>
-        </Toolbar>
-      </AppBar>
-    </header>
+        {todoLogo}
+        <form className="headerForm">
+          {datePicker(selectedDate)}
+          {taskInput}
+          {addButton}
+          {resetButton}
+        </form>
+      </Toolbar>
+    </AppBar>
   );
 }
 

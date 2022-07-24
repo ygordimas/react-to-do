@@ -4,7 +4,7 @@ import Header from "./Header";
 import ToDoList from "./ToDoList";
 import CompleteList from "./CompleteList";
 import { ThemeProvider } from "@mui/material/styles";
-import myTheme from "./theme";
+import theme from "./theme";
 import Paper from "@mui/material/Paper";
 import Lists from "./Lists";
 import { Tab, Tabs } from "@mui/material";
@@ -46,7 +46,7 @@ function App() {
   };
 
   return (
-    <ThemeProvider theme={myTheme}>
+    <ThemeProvider theme={theme}>
       <Container
         sx={{ bgcolor: "secondary.light", height: "100%" }}
         maxWidth={false}
