@@ -48,7 +48,13 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <Container
-        sx={{ bgcolor: "secondary.light", height: "100%" }}
+        sx={{
+          bgcolor: "secondary.light",
+          height: "fit-content",
+          minHeight: "100vh",
+          boxSizing: "border-box",
+          paddingBottom: "24px",
+        }}
         maxWidth={false}
         disableGutters={true}
       >

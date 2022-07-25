@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import { AppBar, Toolbar, Typography } from "@mui/material";
-import CommonButton from "./CommonButton";
+import { AppBar, Toolbar, Typography, Box } from "@mui/material";
+
 import "../css/AppHeader.css";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -10,7 +10,7 @@ import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
-import theme, { HeaderButton, StyledTextField } from "./theme";
+import theme, { StyledTextField } from "./theme";
 
 function Header({ onSubmit, clearToDos }) {
   //for every input we can just use the custom hook below to set its value with the returned parameters
@@ -74,17 +74,19 @@ function Header({ onSubmit, clearToDos }) {
   //task definer
   const taskInput = (
     <StyledTextField
-      sx={{ width: "500px" }}
       label="Write your task here"
       id="outlined-basic"
+      type="text"
+      InputLabelProps={{
+        shrink: true,
+      }}
       onKeyDown={keyPress}
       {...text}
     />
   );
 
   const addButton = (
-    <HeaderButton
-      theme={theme}
+    <Button
       size="large"
       variant="contained"
       onClick={(e) => {
@@ -94,64 +96,44 @@ function Header({ onSubmit, clearToDos }) {
       }}
     >
       Add to List
-    </HeaderButton>
+    </Button>
   );
 
   const resetButton = (
-    <CommonButton
-      size="medium"
-      variant="contained"
-      onClick={() => clearToDos()}
-    >
+    <Button size="medium" variant="contained" onClick={() => clearToDos()}>
       Reset List
-    </CommonButton>
+    </Button>
   );
 
   //h1 component for header
   //the component="h1" ensures that screen readers will read it first while mantaining the aspect of an h6 element
   const todoLogo = (
     <Typography
-      component="h1"
-      sx={{
-        fontFamily: "'Roboto', sans-serif",
-        fontWeight: 700,
-        fontSize: 22,
-        cursor: "default",
-        color: "secondary.dark",
-      }}
+      variant="h1"
+      sx={
+        {
+          // fontFamily: "'Roboto', sans-serif",
+          // fontWeight: 700,
+          // fontSize: 22,
+          // cursor: "default",
+          // color: "secondary.dark",
+        }
+      }
     >
       To-Do List with React + MaterialUI
     </Typography>
   );
 
   return (
-    <AppBar
-      position="static"
-      // sx={{
-      //   bgcolor: "primary.light",
-      //   p: 2,
-      //   borderBottom: 1,
-      //   borderColor: "secondary.dark",
-      // }}
-    >
-      <Toolbar
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          flexDirection: {
-            xs: "column",
-            md: "row",
-          },
-        }}
-      >
+    <AppBar position="static">
+      <Toolbar sx={{}}>
         {todoLogo}
-        <form className="headerForm">
+        <Box component="form">
           {datePicker(selectedDate)}
           {taskInput}
           {addButton}
           {resetButton}
-        </form>
+        </Box>
       </Toolbar>
     </AppBar>
   );

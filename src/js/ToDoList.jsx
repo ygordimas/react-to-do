@@ -19,11 +19,17 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Container from "@mui/material/Container";
 import Checkbox from "@mui/material/Checkbox";
+import theme from "./theme";
 
 function ToDoList(props) {
   const ListButton = styled(Button)(() => ({
     paddingInline: "4px",
     borderRadius: "24px",
+    // borderSizing: "border-box",
+    "&:hover": {
+      backgroundColor: theme.palette.secondary.light,
+      border: `1px solid ${theme.palette.primary.accent}`,
+    },
   }));
 
   const [...todos] = props.todos.filter((prop) => prop.complete == false);
@@ -34,10 +40,10 @@ function ToDoList(props) {
     <>
       {todos.length > 0 && (
         <Container
-          sx={{ display: "flex", justifyContent: "center", my: "24px" }}
+          sx={{ display: "flex", justifyContent: "center", marginTop: "24px" }}
         >
-          <TableContainer component={Paper} sx={{ width: "fit-content" }}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableContainer component={Paper} sx={{ width: "100%" }}>
+            <Table aria-label="simple table">
               <TableHead>
                 <TableRow>
                   <TableCell>Completed</TableCell>
@@ -54,10 +60,14 @@ function ToDoList(props) {
                       key={prop.id}
                       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                     >
-                      <TableCell component="th" scope="row">
+                      <TableCell
+                        sx={{ width: { xs: "80px" } }}
+                        component="th"
+                        scope="row"
+                      >
                         <Checkbox
                           sx={{
-                            "&:hover": { color: "primary.main" },
+                            "&:hover": { color: "primary.accent" },
                           }}
                           disableRipple
                           value={prop.id}
@@ -72,17 +82,25 @@ function ToDoList(props) {
                           }}
                         />
                       </TableCell>
-                      <TableCell>{prop.whenDay}</TableCell>
-                      <TableCell>{prop.whenHour}</TableCell>
-                      <TableCell>{prop.text}</TableCell>
-                      <TableCell>
+                      <TableCell sx={{ width: { xs: "100px" } }}>
+                        {prop.whenDay}
+                      </TableCell>
+                      <TableCell sx={{ width: { xs: "70px" } }}>
+                        {prop.whenHour}
+                      </TableCell>
+                      <TableCell sx={{ width: { xs: "100px" } }}>
+                        {prop.text}
+                      </TableCell>
+                      <TableCell sx={{ width: { xs: "80px" } }}>
                         <ListButton
                           id={prop.id}
                           color="secondary"
                           variant="contained"
                           onClick={(e) => props.delete(e.currentTarget.id)}
                         >
-                          <DeleteIcon />
+                          <DeleteIcon
+                            sx={{ fill: `${theme.palette.primary.accent}` }}
+                          />
                         </ListButton>
                       </TableCell>
                     </TableRow>

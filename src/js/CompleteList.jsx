@@ -19,6 +19,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Container from "@mui/material/Container";
 import Checkbox from "@mui/material/Checkbox";
+import theme from "./theme";
 
 function CompleteList(props) {
   const ListButton = styled(Button)(() => ({
@@ -26,16 +27,6 @@ function CompleteList(props) {
     borderRadius: "24px",
   }));
   const [...todos] = props.todos.filter((prop) => prop.complete == true);
-
-  const [checked, setChecked] = useState(true);
-
-  const toggleChecked = (id) => {
-    setTodos(
-      todos.map((todo) =>
-        todo.id == id ? { ...todo, complete: !todo.complete } : todo
-      )
-    );
-  };
 
   return (
     <>
@@ -64,10 +55,10 @@ function CompleteList(props) {
                       <TableCell component="th" scope="row">
                         <Checkbox
                           sx={{
-                            "&:hover": { color: "primary.main" },
+                            "&:hover": { color: "primary.accent" },
                           }}
                           disableRipple
-                          checked={true}
+                          checked={prop.complete}
                           value={prop.id}
                           onChange={(e) => {
                             const value = e.currentTarget.value;
@@ -83,9 +74,7 @@ function CompleteList(props) {
                       </TableCell>
                       <TableCell>{prop.whenDay}</TableCell>
                       <TableCell>{prop.whenHour}</TableCell>
-                      <TableCell sx={{ color: "surface.dark" }}>
-                        {prop.text}
-                      </TableCell>
+                      <TableCell>{prop.text}</TableCell>
                       <TableCell>
                         <ListButton
                           id={prop.id}
