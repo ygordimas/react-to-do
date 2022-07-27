@@ -19,20 +19,11 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Container from "@mui/material/Container";
 import Checkbox from "@mui/material/Checkbox";
-import theme from "./theme";
+import theme, { ListButton } from "./theme";
 
 function ToDoList(props) {
-  const ListButton = styled(Button)(() => ({
-    paddingInline: "4px",
-    borderRadius: "24px",
-    // borderSizing: "border-box",
-    "&:hover": {
-      backgroundColor: theme.palette.secondary.light,
-      border: `1px solid ${theme.palette.primary.accent}`,
-    },
-  }));
-
   const [...todos] = props.todos.filter((prop) => prop.complete == false);
+  const [teste, setTeste] = useState(false);
 
   const [checked, setChecked] = useState(false);
 

@@ -19,13 +19,9 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Container from "@mui/material/Container";
 import Checkbox from "@mui/material/Checkbox";
-import theme from "./theme";
+import theme, { ListButton } from "./theme";
 
 function CompleteList(props) {
-  const ListButton = styled(Button)(() => ({
-    paddingInline: "4px",
-    borderRadius: "24px",
-  }));
   const [...todos] = props.todos.filter((prop) => prop.complete == true);
 
   return (
@@ -62,10 +58,9 @@ function CompleteList(props) {
                           value={prop.id}
                           onChange={(e) => {
                             const value = e.currentTarget.value;
-
                             setTimeout(() => {
                               props.toggle(value);
-                            }, 120);
+                            }, 75);
                           }}
                           inputProps={{
                             "aria-label": `{Checkbox for Task: ${prop.text}}`,

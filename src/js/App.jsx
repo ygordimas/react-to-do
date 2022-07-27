@@ -5,8 +5,6 @@ import ToDoList from "./ToDoList";
 import CompleteList from "./CompleteList";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "./theme";
-import Paper from "@mui/material/Paper";
-import Lists from "./Lists";
 import { Tab, Tabs } from "@mui/material";
 import Container from "@mui/material/Container";
 
@@ -15,8 +13,43 @@ function App() {
   const [todos, setTodos] = useState(
     JSON.parse(localStorage.getItem("todos")) || []
   );
+  // todos.map((todo) => {
+  //   console.log(typeof todo.whenDay.replace("/", "").replace("/", ""));
+  // });
 
   const completed = [...todos].filter((element) => element.complete == true);
+  const incomplete = [...todos.filter((element) => element.complete == false)];
+
+  const sortedTodos = incomplete.sort((a, b) => {
+    //equal month/day/year and equal hour/minutes (done)
+    //equal month/day/year and equal hour but different minutes (done)
+    //equal month/day/year and different hour/minutes (done)
+    //different month/day/year (done)
+    if (a.whenDay == b.whenDay && a.whenHour == b.whenHour) {
+      return 0;
+    } else if (
+      a.whenDay == b.whenDay &&
+      a.whenHour.slice(0, 2) == b.whenHour.slice(0, 2)
+    ) {
+      return parseInt(a.whenHour.slice(3, 5)) < parseInt(b.whenHour.slice(3, 5))
+        ? -1
+        : 1;
+    } else if (
+      a.whenDay == b.whenDay &&
+      a.whenHour.slice(0, 2) != b.whenHour.slice(0, 2)
+    ) {
+      return parseInt(a.whenHour.slice(0, 2)) < parseInt(b.whenHour.slice(0, 2))
+        ? -1
+        : 1;
+    } else {
+      return parseInt(a.whenDay.split("/").join("")) <
+        parseInt(b.whenDay.split("/").join(""))
+        ? -1
+        : 1;
+    }
+  });
+
+  console.log(sortedTodos);
 
   //toggle function for completion
   const toggleComplete = (id) => {
@@ -34,8 +67,11 @@ function App() {
 
   //hook for updating the localStorage when there are changes to the state of toDos
   useEffect(() => {
-    if (todos.filter((element) => element.complete == false) == 0)
-      setSelectedTab(1);
+    // todos.sort((d1, d2) => {});
+    if (todos.filter((element) => element.complete == false).length == 0)
+      setSelectedTab("1");
+    if (todos.filter((element) => element.complete == false).length > 0)
+      setSelectedTab("0");
     localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos]);
 
@@ -66,13 +102,13 @@ function App() {
               {
                 text,
                 whenDay:
-                  (dateAndTime.getDate() <= 9
-                    ? `0` + dateAndTime.getDate()
-                    : dateAndTime.getDate()) +
-                  `/` +
                   (dateAndTime.getMonth() + 1 <= 9
                     ? `0` + (dateAndTime.getMonth() + 1)
                     : dateAndTime.getMonth() + 1) +
+                  `/` +
+                  (dateAndTime.getDate() <= 9
+                    ? `0` + dateAndTime.getDate()
+                    : dateAndTime.getDate()) +
                   `/` +
                   dateAndTime.getFullYear(),
                 whenHour:

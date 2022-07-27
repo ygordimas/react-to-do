@@ -274,4 +274,17 @@ export const StyledTextField = styled(TextField)(({ theme }) => ({
   },
 }));
 
+export const ListButton = styled(Button)(() => ({
+  paddingInline: "4px",
+  borderRadius: "24px",
+
+  "&:hover": {
+    backgroundColor: theme.palette.secondary.light,
+    border: `1px solid ${theme.palette.primary.accent}`,
+  },
+  "& .MuiSvgIcon-root": {
+    fill: `${theme.palette.primary.accent}`,
+  },
+}));
+
 export default theme;
