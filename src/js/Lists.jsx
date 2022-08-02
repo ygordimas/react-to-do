@@ -2,8 +2,6 @@ import { useState } from "react";
 import React from "react";
 import { Tab, Tabs } from "@mui/material";
 import ToDoList from "./ToDoList";
-import CompleteList from "./CompleteList";
-import Paper from "@mui/material/Paper";
 
 function Lists({ todos, toggle }) {
   const [selectedTab, setSelectedTab] = useState(0);

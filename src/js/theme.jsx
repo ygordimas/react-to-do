@@ -3,14 +3,7 @@ import {
   styled,
   experimental_sx as sx,
 } from "@mui/material/styles";
-import {
-  teal,
-  blueGrey,
-  grey,
-  lightBlue,
-  orange,
-  red,
-} from "@mui/material/colors";
+import { teal, blueGrey, grey, lightBlue, orange } from "@mui/material/colors";
 import { TextField, Button } from "@mui/material";
 
 const Colors = {
@@ -243,26 +236,6 @@ theme.components = {
     },
   },
 };
-
-// export const HeaderButton = styled(Button)(({ theme }) => ({
-//   fontSize: "100%",
-//   textTransform: "uppercase",
-//   fontWeight: "500",
-
-//   border: `1px solid ${theme.palette.secondary.dark}`,
-//   "&.MuiButton-contained.MuiButton-containedPrimary.MuiButton-sizeLarge.MuiButton-containedSizeLarge":
-//     {
-//       backgroundColor: theme.palette.secondary.main,
-//       color: theme.palette.secondary.dark,
-//       padding: "20px",
-//       "&:hover": {
-//         backgroundColor: theme.palette.secondary.light,
-//         fontWeight: "700",
-
-//         color: theme.palette.fontPrimary.main,
-//       },
-//     },
-// }));
 
 export const StyledTextField = styled(TextField)(({ theme }) => ({
   "& label": {

@@ -13,18 +13,12 @@ function App() {
   const [todos, setTodos] = useState(
     JSON.parse(localStorage.getItem("todos")) || []
   );
-  // todos.map((todo) => {
-  //   console.log(typeof todo.whenDay.replace("/", "").replace("/", ""));
-  // });
+  const [selectedTab, setSelectedTab] = useState("0");
 
-  const completed = [...todos].filter((element) => element.complete == true);
-  const incomplete = [...todos.filter((element) => element.complete == false)];
+  const completed = todos.filter((element) => element.complete == true);
+  const incomplete = todos.filter((element) => element.complete == false);
 
   const sortedTodos = incomplete.sort((a, b) => {
-    //equal month/day/year and equal hour/minutes (done)
-    //equal month/day/year and equal hour but different minutes (done)
-    //equal month/day/year and different hour/minutes (done)
-    //different month/day/year (done)
     if (a.whenDay == b.whenDay && a.whenHour == b.whenHour) {
       return 0;
     } else if (
@@ -49,8 +43,6 @@ function App() {
     }
   });
 
-  console.log(sortedTodos);
-
   //toggle function for completion
   const toggleComplete = (id) => {
     setTodos(
@@ -61,21 +53,16 @@ function App() {
   };
 
   const deleteTask = (id) => {
-    // const newTodos = todos.filter((todo) => todo.id != id);
     setTodos(todos.filter((todo) => todo.id != id));
   };
 
-  //hook for updating the localStorage when there are changes to the state of toDos
+  //hook for updating the localStorage when there are changes to the state of todos
   useEffect(() => {
-    // todos.sort((d1, d2) => {});
-    if (todos.filter((element) => element.complete == false).length == 0)
-      setSelectedTab("1");
-    if (todos.filter((element) => element.complete == false).length > 0)
-      setSelectedTab("0");
+    if (completed.length == 0 && incomplete.length > 0) setSelectedTab("0");
     localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos]);
 
-  const [selectedTab, setSelectedTab] = useState("0");
+  //state and function that will define which tab is selected
 
   const handleTabChange = (e, newValue) => {
     setSelectedTab(newValue);
@@ -142,7 +129,11 @@ function App() {
         </Tabs>
 
         {selectedTab == 0 && (
-          <ToDoList todos={todos} toggle={toggleComplete} delete={deleteTask} />
+          <ToDoList
+            todos={sortedTodos}
+            toggle={toggleComplete}
+            delete={deleteTask}
+          />
         )}
         {selectedTab == 1 && (
           <CompleteList
