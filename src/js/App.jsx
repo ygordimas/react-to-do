@@ -5,8 +5,7 @@ import ToDoList from "./ToDoList";
 import CompleteList from "./CompleteList";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "./theme";
-import { Tab, Tabs } from "@mui/material";
-import Container from "@mui/material/Container";
+import { Tab, Tabs, Container } from "@mui/material";
 
 function App() {
   //the list of things to do
@@ -18,30 +17,36 @@ function App() {
   const completed = todos.filter((element) => element.complete == true);
   const incomplete = todos.filter((element) => element.complete == false);
 
-  const sortedTodos = incomplete.sort((a, b) => {
-    if (a.whenDay == b.whenDay && a.whenHour == b.whenHour) {
-      return 0;
-    } else if (
-      a.whenDay == b.whenDay &&
-      a.whenHour.slice(0, 2) == b.whenHour.slice(0, 2)
-    ) {
-      return parseInt(a.whenHour.slice(3, 5)) < parseInt(b.whenHour.slice(3, 5))
-        ? -1
-        : 1;
-    } else if (
-      a.whenDay == b.whenDay &&
-      a.whenHour.slice(0, 2) != b.whenHour.slice(0, 2)
-    ) {
-      return parseInt(a.whenHour.slice(0, 2)) < parseInt(b.whenHour.slice(0, 2))
-        ? -1
-        : 1;
-    } else {
-      return parseInt(a.whenDay.split("/").join("")) <
-        parseInt(b.whenDay.split("/").join(""))
-        ? -1
-        : 1;
-    }
-  });
+  //sorting todo list elements by date and time
+  const sortTodos = (arr) => {
+    todos.sort((a, b) => {
+      if (a.whenDay == b.whenDay && a.whenHour == b.whenHour) {
+        return 0;
+      } else if (
+        a.whenDay == b.whenDay &&
+        a.whenHour.slice(0, 2) == b.whenHour.slice(0, 2)
+      ) {
+        return parseInt(a.whenHour.slice(3, 5)) <
+          parseInt(b.whenHour.slice(3, 5))
+          ? -1
+          : 1;
+      } else if (
+        a.whenDay == b.whenDay &&
+        a.whenHour.slice(0, 2) != b.whenHour.slice(0, 2)
+      ) {
+        return parseInt(a.whenHour.slice(0, 2)) <
+          parseInt(b.whenHour.slice(0, 2))
+          ? -1
+          : 1;
+      } else {
+        return parseInt(a.whenDay.split("/").join("")) <
+          parseInt(b.whenDay.split("/").join(""))
+          ? -1
+          : 1;
+      }
+    });
+    return arr;
+  };
 
   //toggle function for completion
   const toggleComplete = (id) => {
@@ -57,13 +62,13 @@ function App() {
   };
 
   //hook for updating the localStorage when there are changes to the state of todos
+  const sortedTodos = sortTodos(todos);
   useEffect(() => {
     if (completed.length == 0 && incomplete.length > 0) setSelectedTab("0");
-    localStorage.setItem("todos", JSON.stringify(todos));
+    localStorage.setItem("todos", JSON.stringify(sortedTodos));
   }, [todos]);
 
   //state and function that will define which tab is selected
-
   const handleTabChange = (e, newValue) => {
     setSelectedTab(newValue);
   };
@@ -121,19 +126,13 @@ function App() {
           onChange={handleTabChange}
           textColor="primary"
         >
-          {todos.filter((element) => element.complete == false).length > 0 && (
-            <Tab label="Tasks" value="0" />
-          )}
+          {incomplete.length > 0 && <Tab label="Tasks" value="0" />}
 
           {completed.length > 0 && <Tab label="Completed Tasks" value="1" />}
         </Tabs>
 
         {selectedTab == 0 && (
-          <ToDoList
-            todos={sortedTodos}
-            toggle={toggleComplete}
-            delete={deleteTask}
-          />
+          <ToDoList todos={todos} toggle={toggleComplete} delete={deleteTask} />
         )}
         {selectedTab == 1 && (
           <CompleteList

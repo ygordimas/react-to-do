@@ -6,10 +6,9 @@ import { AppBar, Toolbar, Typography, Box } from "@mui/material";
 import "../css/AppHeader.css";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
-import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
-import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
+
 import theme, { StyledTextField } from "./theme";
 
 function Header({ onSubmit, clearToDos }) {
@@ -25,16 +24,6 @@ function Header({ onSubmit, clearToDos }) {
   };
 
   const { resetValue, ...text } = useInputValue("");
-
-  // //add button styling with a custom theme
-  // const buttonStyles = {
-  //   fontSize: 20,
-  //   fontWeight: 700,
-  //   backgroundColor: "red",
-  //   "&:hover": {
-  //     backgroundColor: "yellow",
-  //   },
-  // };
 
   const [selectedDate, setSelectedDate] = useState(new Date());
 
@@ -54,15 +43,6 @@ function Header({ onSubmit, clearToDos }) {
       </LocalizationProvider>
     );
   };
-
-  //Form component
-
-  //date getter
-
-  // const handleDateChange = (newDate) => {
-  //   setSelectedDate(newDate);
-  //   console.log(selectedDate);
-  // };
 
   const keyPress = (e) => {
     if (e.keyCode == 13) {
@@ -108,20 +88,7 @@ function Header({ onSubmit, clearToDos }) {
   //h1 component for header
   //the component="h1" ensures that screen readers will read it first while mantaining the aspect of an h6 element
   const todoLogo = (
-    <Typography
-      variant="h1"
-      sx={
-        {
-          // fontFamily: "'Roboto', sans-serif",
-          // fontWeight: 700,
-          // fontSize: 22,
-          // cursor: "default",
-          // color: "secondary.dark",
-        }
-      }
-    >
-      To-Do List with React + MaterialUI
-    </Typography>
+    <Typography variant="h1">To-Do List with React + MaterialUI</Typography>
   );
 
   return (

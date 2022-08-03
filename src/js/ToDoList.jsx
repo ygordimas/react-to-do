@@ -1,16 +1,6 @@
 import React, { useEffect, useState } from "react";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
 import Paper from "@mui/material/Paper";
-import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
-import Divider from "@mui/material/Divider";
-import { ButtonGroup, toggleButtonClasses, Typography } from "@mui/material";
-import { styled } from "@mui/material/styles";
-import TextField from "@mui/material/TextField";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -23,13 +13,9 @@ import theme, { ListButton } from "./theme";
 import { motion, AnimatePresence } from "framer-motion";
 
 function ToDoList(props) {
-  // const [...todos] = props.todos.filter((prop) => prop.complete == false);
-  const [...todos] = props.todos;
+  const [...todos] = props.todos.filter((prop) => prop.complete == false);
+
   console.log(props);
-  const [teste, setTeste] = useState(false);
-
-  const [checked, setChecked] = useState(false);
-
   return (
     <AnimatePresence>
       <motion.div
@@ -78,6 +64,7 @@ function ToDoList(props) {
                             value={prop.id}
                             onChange={(e) => {
                               const value = e.currentTarget.value;
+
                               setTimeout(() => {
                                 props.toggle(value);
                               }, 120);
@@ -101,7 +88,10 @@ function ToDoList(props) {
                             id={prop.id}
                             color="secondary"
                             variant="contained"
-                            onClick={(e) => props.delete(e.currentTarget.id)}
+                            onClick={(e) => {
+                              console.log(e.currentTarget.id);
+                              props.delete(e.currentTarget.id);
+                            }}
                           >
                             <DeleteIcon
                               sx={{ fill: `${theme.palette.primary.accent}` }}
