@@ -17,97 +17,99 @@ function ToDoList(props) {
 
   console.log(props);
   return (
-    <AnimatePresence>
-      <motion.div
-        initial={{ opacity: 0, x: "-100%" }}
-        animate={{ opacity: 1, x: 0 }}
-        exit={{ opacity: 0, x: "-100%" }}
-      >
-        {todos.length > 0 && (
-          <Container
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              marginTop: "24px",
-            }}
+    <>
+      {todos.length > 0 && (
+        <AnimatePresence>
+          <motion.div
+            initial={{ opacity: 0, x: "-100%" }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: "-100%" }}
           >
-            <TableContainer component={Paper} sx={{ width: "100%" }}>
-              <Table aria-label="simple table">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Completed</TableCell>
-                    <TableCell>Date</TableCell>
-                    <TableCell>Time</TableCell>
-                    <TableCell>Task</TableCell>
-                    <TableCell>Delete</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {todos.map((prop, index) => {
-                    return (
-                      <TableRow
-                        key={prop.id}
-                        sx={{
-                          "&:last-child td, &:last-child th": { border: 0 },
-                        }}
-                      >
-                        <TableCell
-                          sx={{ width: { xs: "80px" } }}
-                          component="th"
-                          scope="row"
+            <Container
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                marginTop: "24px",
+              }}
+            >
+              <TableContainer component={Paper} sx={{ width: "100%" }}>
+                <Table aria-label="simple table">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Completed</TableCell>
+                      <TableCell>Date</TableCell>
+                      <TableCell>Time</TableCell>
+                      <TableCell>Task</TableCell>
+                      <TableCell>Delete</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {todos.map((prop, index) => {
+                      return (
+                        <TableRow
+                          key={prop.id}
+                          sx={{
+                            "&:last-child td, &:last-child th": { border: 0 },
+                          }}
                         >
-                          <Checkbox
-                            sx={{
-                              "&:hover": { color: "primary.accent" },
-                            }}
-                            disableRipple
-                            value={prop.id}
-                            onChange={(e) => {
-                              const value = e.currentTarget.value;
-
-                              setTimeout(() => {
-                                props.toggle(value);
-                              }, 120);
-                            }}
-                            inputProps={{
-                              "aria-label": `{Checkbox for Task: ${prop.text}}`,
-                            }}
-                          />
-                        </TableCell>
-                        <TableCell sx={{ width: { xs: "100px" } }}>
-                          {prop.whenDay}
-                        </TableCell>
-                        <TableCell sx={{ width: { xs: "70px" } }}>
-                          {prop.whenHour}
-                        </TableCell>
-                        <TableCell sx={{ width: { xs: "100px" } }}>
-                          {prop.text}
-                        </TableCell>
-                        <TableCell sx={{ width: { xs: "80px" } }}>
-                          <ListButton
-                            id={prop.id}
-                            color="secondary"
-                            variant="contained"
-                            onClick={(e) => {
-                              console.log(e.currentTarget.id);
-                              props.delete(e.currentTarget.id);
-                            }}
+                          <TableCell
+                            sx={{ width: { xs: "80px" } }}
+                            component="th"
+                            scope="row"
                           >
-                            <DeleteIcon
-                              sx={{ fill: `${theme.palette.primary.accent}` }}
+                            <Checkbox
+                              sx={{
+                                "&:hover": { color: "primary.accent" },
+                              }}
+                              disableRipple
+                              value={prop.id}
+                              onChange={(e) => {
+                                const value = e.currentTarget.value;
+
+                                setTimeout(() => {
+                                  props.toggle(value);
+                                }, 120);
+                              }}
+                              inputProps={{
+                                "aria-label": `{Checkbox for Task: ${prop.text}}`,
+                              }}
                             />
-                          </ListButton>
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Container>
-        )}
-      </motion.div>
-    </AnimatePresence>
+                          </TableCell>
+                          <TableCell sx={{ width: { xs: "100px" } }}>
+                            {prop.whenDay}
+                          </TableCell>
+                          <TableCell sx={{ width: { xs: "70px" } }}>
+                            {prop.whenHour}
+                          </TableCell>
+                          <TableCell sx={{ width: { xs: "100px" } }}>
+                            {prop.text}
+                          </TableCell>
+                          <TableCell sx={{ width: { xs: "80px" } }}>
+                            <ListButton
+                              id={prop.id}
+                              color="secondary"
+                              variant="contained"
+                              onClick={(e) => {
+                                console.log(e.currentTarget.id);
+                                props.delete(e.currentTarget.id);
+                              }}
+                            >
+                              <DeleteIcon
+                                sx={{ fill: `${theme.palette.primary.accent}` }}
+                              />
+                            </ListButton>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Container>
+          </motion.div>
+        </AnimatePresence>
+      )}
+    </>
   );
 }
 

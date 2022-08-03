@@ -82,6 +82,7 @@ function App() {
           minHeight: "100vh",
           boxSizing: "border-box",
           paddingBottom: "24px",
+          overflow: "hidden",
         }}
         maxWidth={false}
         disableGutters={true}
