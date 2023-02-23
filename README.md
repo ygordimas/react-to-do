@@ -9,6 +9,26 @@
 >Click [here](https://ygordimas.github.io/react-to-do/) to access the project's **GitHub Page**
 ---
 
+# How to run it locally
+
+```
+git clone https://github.com/ygordimas/react-to-do.git
+```
+
+```
+cd react-to-do
+```
+
+```
+npm install --legacy-peer-deps
+```
+
+```
+npm run dev
+```
+
+---
+
 # Overview
 
 This is a simple To Do list made with the intention of practicing and implementing basic React concepts and utilizing Material UI styling capabilities.
