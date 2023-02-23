@@ -36,7 +36,7 @@ Most of the UI app components were created and styled with MUI.
 - Conditional rendering of components through ternary operators and states
 - Utilizing Material-UI components library while building the app's interface
 - Styling components either through inline styling with props or a custom theme with Material-UI
-- Responsiviness with Material-UI breakpoints
+- Responsiveness with Material-UI breakpoints
 - A simple 'slide in' animation made with the Framer Motion library
 
 # Results
